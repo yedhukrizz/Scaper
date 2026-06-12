@@ -1,0 +1,6 @@
+{
+  "name": "Archiland",
+  "description": "A high-performance architectural 3D model viewer with first-person physics navigation, advanced ambient occlusion, and dynamic lighting.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
