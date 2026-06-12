@@ -1,7 +1,7 @@
 import { Canvas, useThree } from '@react-three/fiber';
 import { Environment, Sky, SoftShadows, Grid, Stats } from '@react-three/drei';
 import { Physics, RigidBody } from '@react-three/rapier';
-import { EffectComposer, N8AO } from '@react-three/postprocessing';
+import { EffectComposer, N8AO, SMAA } from '@react-three/postprocessing';
 import { Model } from './Model';
 import { FPSControls } from './FPSControls';
 import { ProceduralEnvironment } from './ProceduralEnvironment';
@@ -83,7 +83,7 @@ export function Viewer() {
         shadows={shadowsEnabled} 
         camera={{ position: [0, 1.8, 5], fov: 60 }} 
         dpr={dprConfig}
-        gl={{ antialias: qualityPreset !== 'low', powerPreference: "high-performance" }}
+        gl={{ antialias: true, powerPreference: "high-performance", stencil: false, depth: true }}
       >
         <fog attach="fog" args={['#d1d5db', 10, 200]} />
         <Sky sunPosition={[100, 20, 100]} turbidity={0.1} />
@@ -129,7 +129,8 @@ export function Viewer() {
 
         {ambientOcclusion && qualityPreset !== 'low' && (
           <EffectComposer disableNormalPass={aoEdgeOutline} multisampling={0}>
-            <N8AO halfRes aoRadius={2} intensity={aoIntensity} color="black" />
+            <N8AO aoRadius={2} intensity={aoIntensity} color="black" />
+            <SMAA />
           </EffectComposer>
         )}
 
