@@ -62,6 +62,8 @@ export function Viewer() {
   const environmentPreset = useStore((state) => state.environmentPreset);
   const fpsLimit = useStore((state) => state.fpsLimit);
   const ambientOcclusion = useStore((state) => state.ambientOcclusion);
+  const aoIntensity = useStore((state) => state.aoIntensity);
+  const aoEdgeOutline = useStore((state) => state.aoEdgeOutline);
   const [clickToStart, setClickToStart] = useState(!inputState.isMobile);
 
   const dprConfig = useMemo(() => {
@@ -126,8 +128,8 @@ export function Viewer() {
         </Physics>
 
         {ambientOcclusion && qualityPreset !== 'low' && (
-          <EffectComposer disableNormalPass={useStore.getState().aoEdgeOutline}>
-            <N8AO aoRadius={2} intensity={useStore.getState().aoIntensity} color="black" />
+          <EffectComposer disableNormalPass={aoEdgeOutline} multisampling={0}>
+            <N8AO halfRes aoRadius={2} intensity={aoIntensity} color="black" />
           </EffectComposer>
         )}
 

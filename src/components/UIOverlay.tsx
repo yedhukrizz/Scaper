@@ -34,6 +34,8 @@ export function UIOverlay() {
   const setCameraMode = useStore((state) => state.setCameraMode);
   const environmentPreset = useStore((state) => state.environmentPreset);
   const setEnvironmentPreset = useStore((state) => state.setEnvironmentPreset);
+  const collisionEnabled = useStore((state) => state.collisionEnabled);
+  const setCollisionEnabled = useStore((state) => state.setCollisionEnabled);
   const triggerLocateModel = useStore((state) => state.triggerLocateModel);
   const setFile = useStore((state) => state.setFile);
 
@@ -308,14 +310,14 @@ export function UIOverlay() {
                 </button>
             </div>
             
-            {/* Collision Toggle */}
+            {/* Walk Mode Toggle */}
             <div className="flex items-center justify-between pt-2 border-t border-white/10 mt-4">
-                <span className="text-sm text-gray-300">Physical Collisions</span>
+                <span className="text-sm text-gray-300">Walk Mode (Gravity)</span>
                 <button 
-                  onClick={() => useStore.getState().setCollisionEnabled(!useStore.getState().collisionEnabled)}
-                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${useStore.getState().collisionEnabled ? 'bg-blue-500' : 'bg-gray-600'}`}
+                  onClick={() => setCollisionEnabled(!collisionEnabled)}
+                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${collisionEnabled ? 'bg-blue-500' : 'bg-gray-600'}`}
                 >
-                  <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${useStore.getState().collisionEnabled ? 'translate-x-6' : 'translate-x-1'}`} />
+                  <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${collisionEnabled ? 'translate-x-6' : 'translate-x-1'}`} />
                 </button>
             </div>
             <p className="text-[10px] text-gray-500">Turn OFF to FLY through walls and reach other floors. Improves FPS.</p>
