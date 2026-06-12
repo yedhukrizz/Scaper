@@ -23,6 +23,8 @@ export function UIOverlay() {
   const setAoIntensity = useStore((state) => state.setAoIntensity);
   const aoEdgeOutline = useStore((state) => state.aoEdgeOutline);
   const setAoEdgeOutline = useStore((state) => state.setAoEdgeOutline);
+  const aoMode = useStore((state) => state.aoMode);
+  const setAoMode = useStore((state) => state.setAoMode);
   const modelOutlines = useStore((state) => state.modelOutlines);
   const setModelOutlines = useStore((state) => state.setModelOutlines);
   const isAOBaking = useStore((state) => state.isAOBaking);
@@ -274,6 +276,24 @@ export function UIOverlay() {
                          >
                            <span className={`inline-block h-3 w-3 transform rounded-full bg-white transition-transform ${aoEdgeOutline ? 'translate-x-5' : 'translate-x-1'}`} />
                          </button>
+                       </div>
+                       
+                       <div className="flex items-center justify-between pt-1">
+                         <span className="text-xs text-gray-400" title="N8AO is optimized for mobile/fast rendering. SSAO is standard.">AO Pipeline Module</span>
+                         <div className="flex rounded bg-black/50 p-1">
+                           <button
+                             onClick={() => setAoMode('n8ao')}
+                             className={`px-2 py-1 text-[10px] rounded transition-colors ${aoMode === 'n8ao' ? 'bg-blue-600 text-white' : 'text-gray-400 hover:text-white hover:bg-white/10'}`}
+                           >
+                             N8AO
+                           </button>
+                           <button
+                             onClick={() => setAoMode('ssao')}
+                             className={`px-2 py-1 text-[10px] rounded transition-colors ${aoMode === 'ssao' ? 'bg-blue-600 text-white' : 'text-gray-400 hover:text-white hover:bg-white/10'}`}
+                           >
+                             SSAO
+                           </button>
+                         </div>
                        </div>
                     </div>
                 ) : (

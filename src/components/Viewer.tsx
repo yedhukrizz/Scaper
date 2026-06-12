@@ -1,7 +1,7 @@
 import { Canvas, useThree } from '@react-three/fiber';
 import { Environment, Sky, SoftShadows, Grid, Stats } from '@react-three/drei';
 import { Physics, RigidBody } from '@react-three/rapier';
-import { EffectComposer, N8AO, SMAA } from '@react-three/postprocessing';
+import { EffectComposer, N8AO, SSAO } from '@react-three/postprocessing';
 import { Model } from './Model';
 import { FPSControls } from './FPSControls';
 import { ProceduralEnvironment } from './ProceduralEnvironment';
@@ -64,6 +64,7 @@ export function Viewer() {
   const ambientOcclusion = useStore((state) => state.ambientOcclusion);
   const aoIntensity = useStore((state) => state.aoIntensity);
   const aoEdgeOutline = useStore((state) => state.aoEdgeOutline);
+  const aoMode = useStore((state) => state.aoMode);
   const [clickToStart, setClickToStart] = useState(!inputState.isMobile);
 
   const dprConfig = useMemo(() => {
@@ -129,8 +130,11 @@ export function Viewer() {
 
         {ambientOcclusion && qualityPreset !== 'low' && (
           <EffectComposer disableNormalPass={aoEdgeOutline} multisampling={0}>
-            <N8AO aoRadius={2} intensity={aoIntensity} color="black" />
-            <SMAA />
+            {aoMode === 'n8ao' ? (
+              <N8AO aoRadius={2} intensity={aoIntensity} color="black" />
+            ) : (
+              <SSAO radius={0.2} intensity={aoIntensity * 10} luminanceInfluence={0.5} color="black" />
+            )}
           </EffectComposer>
         )}
 

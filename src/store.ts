@@ -15,6 +15,7 @@ interface AppState {
   ambientOcclusion: boolean;
   aoIntensity: number;
   aoEdgeOutline: boolean; // Default false to remove the depth outline artifact
+  aoMode: 'n8ao' | 'ssao'; // User togglable AO mode
   modelOutlines: boolean;
   isAOBaking: boolean;
   isFastAOBaking: boolean;
@@ -34,6 +35,7 @@ interface AppState {
   setAmbientOcclusion: (enabled: boolean) => void;
   setAoIntensity: (intensity: number) => void;
   setAoEdgeOutline: (enabled: boolean) => void;
+  setAoMode: (mode: 'n8ao' | 'ssao') => void;
   setModelOutlines: (enabled: boolean) => void;
   setIsAOBaking: (isBaking: boolean) => void;
   setIsFastAOBaking: (isBaking: boolean) => void;
@@ -55,6 +57,7 @@ export const useStore = create<AppState>((set, get) => ({
   ambientOcclusion: false,
   aoIntensity: 1.5,
   aoEdgeOutline: false, // Default false to remove the depth outline artifact
+  aoMode: typeof window !== 'undefined' && ('ontouchstart' in window || navigator.maxTouchPoints > 0) ? 'n8ao' : 'ssao',
   modelOutlines: false, // Hide white edge outlines by default
   isAOBaking: false,
   isFastAOBaking: false,
@@ -83,6 +86,7 @@ export const useStore = create<AppState>((set, get) => ({
   setAmbientOcclusion: (ambientOcclusion) => set({ ambientOcclusion }),
   setAoIntensity: (aoIntensity) => set({ aoIntensity }),
   setAoEdgeOutline: (aoEdgeOutline) => set({ aoEdgeOutline }),
+  setAoMode: (aoMode) => set({ aoMode }),
   setModelOutlines: (modelOutlines) => set({ modelOutlines }),
   setIsAOBaking: (isAOBaking) => set({ isAOBaking }),
   setIsFastAOBaking: (isFastAOBaking) => set({ isFastAOBaking }),
